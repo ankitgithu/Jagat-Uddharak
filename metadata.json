@@ -1,0 +1,6 @@
+{
+  "name": "Jagat Uddharak | जगत उद्धारक",
+  "description": "आध्यात्मिक ज्ञान, मानव सेवा एवं समाज सुधार मंच। संत रामपाल जी महाराज के मार्गदर्शन में पवित्र सद्ग्रंथों पर आधारित तत्वज्ञान और अन्नपूर्णा मुहिम।",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
