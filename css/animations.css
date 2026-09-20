@@ -1,0 +1,498 @@
+/* ===================================================
+   ANIMATIONS & HOVER INTERACTION SYSTEM
+   Jagat Uddharak Website
+   =================================================== */
+
+/* ===================================================
+   1. CUSTOM DESKTOP MOUSE POINTER SYSTEM (Requirement 7)
+   =================================================== */
+.custom-cursor-dot {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 8px;
+  height: 8px;
+  margin-left: -4px;
+  margin-top: -4px;
+  border-radius: 50%;
+  background: var(--primary-gradient);
+  box-shadow: 0 0 10px rgba(255, 59, 31, 0.7);
+  pointer-events: none;
+  z-index: 10000;
+  opacity: 0;
+  transform: translate3d(-999px, -999px, 0);
+  transition: opacity 0.3s ease, width 0.25s ease, height 0.25s ease;
+  will-change: transform;
+}
+
+.custom-cursor-ring {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 38px;
+  height: 38px;
+  margin-left: -19px;
+  margin-top: -19px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(212, 20, 20, 0.45);
+  background: transparent;
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0;
+  transform: translate3d(-999px, -999px, 0);
+  transition: width 0.35s cubic-bezier(0.25, 0.8, 0.25, 1),
+              height 0.35s cubic-bezier(0.25, 0.8, 0.25, 1),
+              margin-left 0.35s cubic-bezier(0.25, 0.8, 0.25, 1),
+              margin-top 0.35s cubic-bezier(0.25, 0.8, 0.25, 1),
+              border-color 0.3s ease,
+              background-color 0.3s ease,
+              box-shadow 0.3s ease,
+              opacity 0.3s ease;
+  will-change: transform;
+}
+
+/* Hovering generic button, link, badge, or card */
+.custom-cursor-ring.cursor-hover-active {
+  width: 58px;
+  height: 58px;
+  margin-left: -29px;
+  margin-top: -29px;
+  border-color: rgba(255, 59, 31, 0.85);
+  background: rgba(212, 20, 20, 0.08);
+  box-shadow: 0 0 16px rgba(212, 20, 20, 0.2);
+}
+
+/* Hovering video card or player element */
+.custom-cursor-ring.cursor-video-active {
+  width: 72px;
+  height: 72px;
+  margin-left: -36px;
+  margin-top: -36px;
+  border-color: #ff3b1f;
+  background: rgba(127, 0, 0, 0.16);
+  box-shadow: 0 0 24px rgba(255, 59, 31, 0.35);
+}
+
+.custom-cursor-glow {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 380px;
+  height: 380px;
+  margin-left: -190px;
+  margin-top: -190px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 59, 31, 0.05) 0%, rgba(212, 20, 20, 0.02) 45%, transparent 70%);
+  pointer-events: none;
+  z-index: 9998;
+  opacity: 0;
+  transform: translate3d(-999px, -999px, 0);
+  transition: opacity 0.4s ease;
+  will-change: transform;
+}
+
+/* Touch devices & small screens disable custom pointer */
+@media (pointer: coarse), (hover: none) {
+  .custom-cursor-dot,
+  .custom-cursor-ring,
+  .custom-cursor-glow {
+    display: none !important;
+  }
+}
+
+/* ===================================================
+   2. VIDEO CARD HOVER SYSTEM (Requirement 5)
+   =================================================== */
+.video-card-item {
+  position: relative;
+  border: 1px solid rgba(229, 231, 235, 0.9);
+  border-radius: 1rem;
+  background: rgba(255, 255, 255, 0.96);
+  overflow: hidden;
+  transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1),
+              box-shadow 0.4s cubic-bezier(0.25, 0.8, 0.25, 1),
+              border-color 0.35s ease;
+  will-change: transform, box-shadow;
+}
+
+.video-card-item:hover {
+  transform: translateY(-8px) scale(1.012);
+  box-shadow: 0 20px 42px -10px rgba(127, 0, 0, 0.22), 0 8px 18px -4px rgba(0, 0, 0, 0.08);
+  border-color: rgba(212, 20, 20, 0.45);
+}
+
+.video-thumb-container {
+  position: relative;
+  overflow: hidden;
+  border-top-left-radius: inherit;
+  border-top-right-radius: inherit;
+}
+
+.video-thumb-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.7s cubic-bezier(0.2, 0.8, 0.2, 1), filter 0.5s ease;
+  will-change: transform;
+}
+
+.video-card-item:hover .video-thumb-img {
+  transform: scale(1.09);
+  filter: brightness(1.05) contrast(1.03);
+}
+
+.video-play-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(15, 23, 42, 0.65) 0%, rgba(15, 23, 42, 0.25) 50%, rgba(15, 23, 42, 0.08) 100%);
+  transition: background 0.45s cubic-bezier(0.25, 0.8, 0.25, 1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.video-card-item:hover .video-play-overlay {
+  background: linear-gradient(to top, rgba(127, 0, 0, 0.85) 0%, rgba(212, 20, 20, 0.42) 50%, rgba(0, 0, 0, 0.15) 100%);
+}
+
+.btn-play-gradient {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: var(--primary-gradient);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  border: 2.5px solid rgba(255, 255, 255, 0.95);
+  box-shadow: 0 6px 20px rgba(212, 20, 20, 0.45);
+  transition: transform 0.35s cubic-bezier(0.25, 0.8, 0.25, 1),
+              box-shadow 0.35s cubic-bezier(0.25, 0.8, 0.25, 1),
+              filter 0.35s ease;
+  will-change: transform;
+}
+
+.btn-play-gradient-sm {
+  width: 42px;
+  height: 42px;
+}
+
+.video-card-item:hover .btn-play-gradient {
+  transform: scale(1.18) rotate(3deg);
+  box-shadow: 0 10px 28px rgba(255, 59, 31, 0.65), 0 0 16px rgba(255, 255, 255, 0.4);
+  filter: brightness(1.1);
+}
+
+/* ===================================================
+   3. GENERAL IMAGE HOVER & GALLERY SYSTEM (Requirement 6)
+   =================================================== */
+.img-hover-container {
+  position: relative;
+  overflow: hidden;
+  border-radius: 0.75rem;
+}
+
+.img-hover-zoom {
+  transition: transform 0.65s cubic-bezier(0.2, 0.8, 0.2, 1), filter 0.5s ease;
+  will-change: transform;
+}
+
+.img-hover-container:hover .img-hover-zoom,
+.glass-card:hover .img-hover-zoom {
+  transform: scale(1.07);
+  filter: brightness(1.05);
+}
+
+.img-hover-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(127, 0, 0, 0.45) 0%, transparent 60%);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+}
+
+.img-hover-container:hover .img-hover-overlay,
+.glass-card:hover .img-hover-overlay {
+  opacity: 1;
+}
+
+/* Gallery Specific Card Zoom & Overlay */
+.gallery-card {
+  position: relative;
+  overflow: hidden;
+  border-radius: 1rem;
+  background-color: #F3F4F6;
+  border: 1px solid rgba(229, 231, 235, 0.85);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.05);
+  transition: box-shadow 0.4s cubic-bezier(0.25, 0.8, 0.25, 1),
+              transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1),
+              border-color 0.35s ease;
+}
+
+.gallery-card:hover {
+  transform: translateY(-7px);
+  box-shadow: 0 18px 38px -8px rgba(127, 0, 0, 0.2), 0 6px 16px -2px rgba(0, 0, 0, 0.08);
+  border-color: rgba(212, 20, 20, 0.4);
+}
+
+.gallery-card-img-wrapper {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  aspect-ratio: 4 / 3;
+}
+
+.gallery-card-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.7s cubic-bezier(0.2, 0.8, 0.2, 1), filter 0.6s ease;
+  will-change: transform, filter;
+}
+
+.gallery-card:hover .gallery-card-img {
+  transform: scale(1.09);
+  filter: brightness(1.06) contrast(1.03);
+}
+
+.gallery-card-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(15, 23, 42, 0.85) 0%, rgba(15, 23, 42, 0.35) 50%, rgba(15, 23, 42, 0.05) 100%);
+  opacity: 0.88;
+  transition: opacity 0.45s cubic-bezier(0.25, 0.8, 0.25, 1), background 0.45s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 1.5rem;
+  color: #FFFFFF;
+}
+
+.gallery-card:hover .gallery-card-overlay {
+  opacity: 0.98;
+  background: linear-gradient(to top, rgba(127, 0, 0, 0.9) 0%, rgba(212, 20, 20, 0.5) 60%, rgba(15, 23, 42, 0.12) 100%);
+}
+
+.gallery-zoom-badge {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(8px);
+  color: var(--primary-red);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.15rem;
+  opacity: 0;
+  transform: scale(0.8) translateY(-6px);
+  transition: all 0.35s cubic-bezier(0.25, 0.8, 0.25, 1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.gallery-card:hover .gallery-zoom-badge {
+  opacity: 1;
+  transform: scale(1) translateY(0);
+}
+
+/* ===================================================
+   4. SCROLL REVEAL ANIMATIONS (Requirement 3)
+   =================================================== */
+.reveal-init {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.75s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+
+.reveal-init.revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.reveal-delay-1 { transition-delay: 0.08s; }
+.reveal-delay-2 { transition-delay: 0.16s; }
+.reveal-delay-3 { transition-delay: 0.24s; }
+.reveal-delay-4 { transition-delay: 0.32s; }
+
+/* ===================================================
+   5. NAVBAR AMBIENT BUBBLES & MICRO-ANIMATIONS
+   =================================================== */
+.navbar-bubbles-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+  border-radius: inherit;
+}
+
+.nav-bubble {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(16px);
+  opacity: 0.28;
+  pointer-events: none;
+  animation-iteration-count: infinite;
+  animation-timing-function: ease-in-out;
+}
+
+.nav-bubble-1 {
+  width: 90px;
+  height: 90px;
+  background: radial-gradient(circle, #F59E0B, #d41414);
+  top: -20px;
+  left: 15%;
+  animation: floatBubble1 8s infinite alternate;
+}
+
+.nav-bubble-2 {
+  width: 120px;
+  height: 120px;
+  background: radial-gradient(circle, #ff3b1f, #F59E0B);
+  top: -10px;
+  left: 60%;
+  animation: floatBubble2 11s infinite alternate;
+}
+
+.nav-bubble-3 {
+  width: 80px;
+  height: 80px;
+  background: radial-gradient(circle, #F59E0B, transparent);
+  bottom: -20px;
+  right: 18%;
+  animation: floatBubble3 9s infinite alternate;
+}
+
+@keyframes floatBubble1 {
+  0% { transform: translate(0, 0) scale(1); opacity: 0.22; }
+  50% { transform: translate(30px, 15px) scale(1.15); opacity: 0.35; }
+  100% { transform: translate(-20px, 25px) scale(0.95); opacity: 0.18; }
+}
+
+@keyframes floatBubble2 {
+  0% { transform: translate(0, 0) scale(1); opacity: 0.25; }
+  50% { transform: translate(-35px, 20px) scale(1.1); opacity: 0.4; }
+  100% { transform: translate(25px, -10px) scale(0.9); opacity: 0.2; }
+}
+
+@keyframes floatBubble3 {
+  0% { transform: translate(0, 0) scale(1); opacity: 0.18; }
+  50% { transform: translate(20px, -20px) scale(1.2); opacity: 0.3; }
+  100% { transform: translate(-25px, 10px) scale(1); opacity: 0.18; }
+}
+
+/* Live Pulse Animation */
+.live-pulse-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: #ff3b1f;
+  position: relative;
+  display: inline-block;
+}
+
+.live-pulse-dot::after {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  border-radius: 50%;
+  background-color: #ff3b1f;
+  opacity: 0.6;
+  animation: livePing 1.6s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+@keyframes livePing {
+  0% { transform: scale(0.95); opacity: 0.8; }
+  75%, 100% { transform: scale(2.2); opacity: 0; }
+}
+
+/* Hero floating animation */
+@keyframes heroFloat {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-8px); }
+}
+
+.hero-floating-element {
+  animation: heroFloat 5s ease-in-out infinite;
+}
+
+/* ===================================================
+   6. SMOOTH TRANSITIONS & INTERACTIVE HOVER (Requirement 4 & 8)
+   =================================================== */
+/* Universal smooth easing tokens */
+a, button, .btn, .nav-link, .badge, .card, .glass-card, .video-card-item, .gallery-card, .accordion-button {
+  transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1),
+              opacity 0.25s ease,
+              box-shadow 0.3s cubic-bezier(0.25, 0.8, 0.25, 1),
+              background-color 0.25s ease,
+              border-color 0.25s ease,
+              color 0.2s ease;
+}
+
+/* Link hover styling */
+a:hover {
+  text-decoration: none;
+}
+
+/* Book cards cover hover */
+.glass-card:hover .book-cover-img {
+  transform: scale(1.05) rotate(1deg);
+  transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.book-cover-img {
+  transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+  will-change: transform;
+}
+
+/* Ashram cards hover */
+.ashram-card {
+  transition: transform 0.35s cubic-bezier(0.25, 0.8, 0.25, 1),
+              box-shadow 0.35s cubic-bezier(0.25, 0.8, 0.25, 1),
+              border-color 0.3s ease;
+}
+
+.ashram-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 16px 36px -6px rgba(127, 0, 0, 0.12), 0 6px 14px -2px rgba(0, 0, 0, 0.05);
+  border-color: rgba(212, 20, 20, 0.4);
+}
+
+/* Stat cards hover */
+.stat-card-item {
+  transition: transform 0.35s cubic-bezier(0.25, 0.8, 0.25, 1),
+              box-shadow 0.35s cubic-bezier(0.25, 0.8, 0.25, 1),
+              border-color 0.3s ease;
+}
+
+.stat-card-item:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 14px 30px -4px rgba(127, 0, 0, 0.12);
+  border-color: rgba(212, 20, 20, 0.35);
+}
+
+/* ===================================================
+   7. ACCESSIBILITY: PREFERS REDUCED MOTION
+   =================================================== */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .custom-cursor-dot,
+  .custom-cursor-ring,
+  .custom-cursor-glow {
+    display: none !important;
+  }
+}
