@@ -24,7 +24,8 @@ import {
 } from './data/annapurna.js';
 
 import { BOOKS_DATA } from './data/books.js';
-import { FEATURED_MEDIA_ITEMS, VIDEOS_DATA } from './data/videos.js';
+import { ALL_HOME_VIDEOS } from './data/videos.js';
+import { renderVideoCarouselSlides } from './carousel.js';
 
 document.addEventListener('DOMContentLoaded', () => {
   renderAllSections();
@@ -104,7 +105,7 @@ function renderSpiritualTopics() {
               <p class="mb-2">${details}</p>
               <div class="fw-bold text-dark mb-1">${isHindi ? 'सद्ग्रंथ प्रमाण:' : 'Scripture Evidences:'}</div>
               <ul class="mb-0 ps-3">
-                ${topic.references.map(ref => `<li>${ref}</li>`).join('')}
+                ${(topic.references || []).map(ref => `<li>${ref}</li>`).join('')}
               </ul>
             </div>
           </div>
@@ -182,7 +183,10 @@ function renderSocialReforms() {
     const title = isHindi ? reform.title : reform.titleEn;
     const tagline = isHindi ? reform.tagline : reform.taglineEn;
     const desc = isHindi ? reform.description : reform.descriptionEn;
-    const points = isHindi ? reform.points : reform.pointsEn;
+    const rawPoints = isHindi 
+      ? (reform.impactPoints || reform.points) 
+      : (reform.impactPointsEn || reform.pointsEn || reform.impactPoints);
+    const points = Array.isArray(rawPoints) ? rawPoints : [];
 
     return `
       <div class="col-12 col-md-6 col-lg-4 reveal-init">
@@ -242,7 +246,8 @@ function renderAnnapurnaSection() {
       const title = isHindi ? init.title : init.titleEn;
       const tagline = isHindi ? init.tagline : init.taglineEn;
       const desc = isHindi ? init.description : init.descriptionEn;
-      const points = isHindi ? init.points : init.pointsEn;
+      const rawPoints = isHindi ? (init.points || init.impactPoints) : (init.pointsEn || init.impactPointsEn || init.points);
+      const points = Array.isArray(rawPoints) ? rawPoints : [];
 
       return `
         <div class="col-12 col-md-6 col-lg-4 reveal-init">
@@ -368,88 +373,9 @@ function renderBooksSection() {
   }).join('');
 }
 
-// 6. Videos & Featured Media Section + Single Official Website Card
+// 6. Videos & Featured Media Section (Main Home Page Carousel)
 function renderVideosSection() {
-  const featuredContainer = document.getElementById('featuredMediaSlider');
-  const videosGrid = document.getElementById('videosCardsGrid');
-
-  const isHindi = getCurrentLang() === 'hi';
-
-  if (featuredContainer) {
-    featuredContainer.innerHTML = FEATURED_MEDIA_ITEMS.map(item => {
-      const title = isHindi ? item.title : item.titleEn;
-      const desc = isHindi ? item.description : item.descriptionEn;
-      const badge = isHindi ? item.badge : item.badgeEn;
-      const meta = isHindi ? item.meta : item.metaEn;
-
-      return `
-        <div class="flex-shrink-0" style="width: 360px;">
-          <div class="video-card-item h-100 overflow-hidden d-flex flex-column" data-youtube-id="${item.youtubeId}" style="cursor: pointer;">
-            <div class="video-thumb-container" style="height: 200px;">
-              <img src="${item.thumbnail}" alt="${title}" class="video-thumb-img" loading="lazy" referrerpolicy="no-referrer">
-              <div class="video-play-overlay">
-                <div class="btn-play-gradient">
-                  <i class="bi bi-play-fill fs-3 text-white"></i>
-                </div>
-              </div>
-              <span class="position-absolute top-2 start-2 badge bg-danger text-white rounded-pill px-3 py-1 shadow-sm">
-                ${badge}
-              </span>
-            </div>
-
-            <div class="p-3 d-flex flex-column flex-grow-1">
-              <div class="text-xs text-spiritual-amber fw-semibold mb-1">${meta}</div>
-              <h5 class="fw-bold text-dark mb-2 fs-6">${title}</h5>
-              <p class="text-muted small mb-3 flex-grow-1 text-truncate-2" style="display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">${desc}</p>
-              
-              <div class="mt-auto pt-2 border-top d-flex align-items-center justify-content-between text-xs">
-                <span class="text-danger fw-semibold">${isHindi ? 'चलाएं ▶' : 'Play ▶'}</span>
-                <a href="${item.link}" target="_blank" rel="noopener noreferrer" class="text-secondary" onclick="event.stopPropagation();">
-                  YouTube <i class="bi bi-box-arrow-up-right ms-1"></i>
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
-      `;
-    }).join('');
-  }
-
-  if (videosGrid) {
-    videosGrid.innerHTML = VIDEOS_DATA.map(vid => {
-      const title = isHindi ? vid.title : vid.titleEn;
-      const speaker = isHindi ? vid.speaker : vid.speakerEn;
-      const cat = isHindi ? vid.category : vid.categoryEn;
-
-      return `
-        <div class="col-12 col-md-6 col-lg-3 reveal-init">
-          <div class="video-card-item h-100 overflow-hidden d-flex flex-column" data-youtube-id="${vid.youtubeId}" style="cursor: pointer;">
-            <div class="video-thumb-container" style="height: 170px;">
-              <img src="${vid.thumbnail}" alt="${title}" class="video-thumb-img" loading="lazy" referrerpolicy="no-referrer">
-              <div class="video-play-overlay">
-                <div class="btn-play-gradient btn-play-gradient-sm">
-                  <i class="bi bi-play-fill fs-5 text-white"></i>
-                </div>
-              </div>
-              <span class="position-absolute bottom-2 end-2 badge bg-dark text-white rounded px-2 py-1 text-xs">
-                ${vid.duration}
-              </span>
-            </div>
-
-            <div class="p-3 d-flex flex-column flex-grow-1">
-              <span class="badge bg-danger-subtle text-danger align-self-start mb-2 rounded-pill px-2 py-1 text-xs">${cat}</span>
-              <h6 class="fw-bold text-dark mb-1 fs-6 text-truncate-2" style="display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">${title}</h6>
-              <div class="text-xs text-muted mb-2">${speaker}</div>
-              <div class="mt-auto pt-2 border-top d-flex align-items-center justify-content-between text-xs text-muted">
-                <span><i class="bi bi-eye me-1"></i>${vid.views}</span>
-                <span class="text-danger fw-semibold">${isHindi ? 'वीडियो देखें' : 'Watch'}</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      `;
-    }).join('');
-  }
+  renderVideoCarouselSlides();
 }
 
 // 7. Latest Updates
@@ -541,7 +467,7 @@ function renderAshramsSection() {
           <div class="mt-auto pt-3 border-top">
             <div class="text-xs text-muted fw-bold mb-1">${isHindi ? 'संपर्क नंबर:' : 'Helpline:'}</div>
             <div class="d-flex flex-column gap-1">
-              ${ashram.phoneNumbers.map(phone => `
+              ${(ashram.phoneNumbers || []).map(phone => `
                 <a href="tel:${phone.replace(/\s+/g, '')}" class="btn btn-sm btn-outline-danger rounded-pill d-flex align-items-center justify-content-center gap-1 text-decoration-none fw-semibold">
                   <i class="bi bi-telephone-fill"></i> ${phone}
                 </a>
@@ -560,16 +486,37 @@ function setupVideoModal() {
   const iframeEl = document.getElementById('videoPlayerIframe');
   if (!modalEl || !iframeEl) return;
 
+  window.openVideoModal = function(ytid) {
+    if (ytid) {
+      iframeEl.src = `https://www.youtube-nocookie.com/embed/${ytid}?autoplay=1`;
+      if (typeof bootstrap !== 'undefined' && bootstrap.Modal) {
+        const modal = bootstrap.Modal.getOrCreateInstance(modalEl);
+        modal.show();
+      }
+    }
+  };
+
   document.addEventListener('click', (e) => {
+    // If clicking external anchor, let it open normally
+    if (e.target.closest('a[target="_blank"]')) return;
+
+    const playBtn = e.target.closest('.play-modal-btn');
+    if (playBtn) {
+      const card = playBtn.closest('.video-card-item');
+      if (card) {
+        const ytid = card.getAttribute('data-youtube-id');
+        if (ytid) {
+          window.openVideoModal(ytid);
+          return;
+        }
+      }
+    }
+
     const card = e.target.closest('.video-card-item');
     if (card) {
       const ytid = card.getAttribute('data-youtube-id');
       if (ytid) {
-        iframeEl.src = `https://www.youtube-nocookie.com/embed/${ytid}?autoplay=1`;
-        if (typeof bootstrap !== 'undefined') {
-          const modal = new bootstrap.Modal(modalEl);
-          modal.show();
-        }
+        window.openVideoModal(ytid);
       }
     }
   });

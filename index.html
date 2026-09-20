@@ -458,45 +458,58 @@
     </section>
 
     <!-- ===================================================
-         VIDEOS & PLAYLISTS SECTION + SINGLE OFFICIAL SITE CARD
+         MAIN HOME PAGE VIDEO GALLERY (CAROUSEL SLIDER)
          =================================================== -->
     <section id="videos" class="section-padding bg-white border-top border-bottom">
       <div class="container">
-        <div class="text-center mb-5">
-          <span class="section-badge" data-i18n="videos.badge">सत्यापित वीडियो संग्रह</span>
-          <h2 class="section-title" data-i18n="videos.title">वीडियो और प्लेलिस्ट</h2>
+        <div class="text-center mb-4">
+          <span class="section-badge" data-i18n="videos.badge">आधिकारिक वीडियो संग्रह</span>
+          <h2 class="section-title" data-i18n="videos.title">वीडियो गैलरी</h2>
           <p class="section-subtitle" data-i18n="videos.subtitle">
-            सत्य ज्ञान, तार्किक परिचर्चाएं, प्लेलिस्ट एवं आधिकारिक यूट्यूब शो का विशिष्ट संग्रह।
+            SA True Story वेब-सीरीज़, यूट्यूब शो एवं अन्नपूर्णा मुहिम की सत्यापित वीडियो श्रृंखला।
           </p>
         </div>
 
-        <!-- Featured Media Slider -->
-        <div class="mb-5">
-          <div class="d-flex align-items-center justify-content-between mb-4">
-            <div>
-              <h4 class="fw-bold text-dark mb-1 fs-4" data-i18n="videos.featuredTitle">विशेष वीडियो व प्लेलिस्ट</h4>
-              <small class="text-muted" data-i18n="videos.featuredSubtitle">SA True Story प्लेलिस्ट, Factful Debates यूट्यूब शो एवं आधिकारिक वीडियो का संकलन।</small>
-            </div>
-            <div class="d-flex gap-2">
-              <button id="featuredMediaPrev" class="btn btn-outline-danger btn-sm rounded-circle p-2" aria-label="Previous featured media">
-                <i class="bi bi-chevron-left"></i>
-              </button>
-              <button id="featuredMediaNext" class="btn btn-outline-danger btn-sm rounded-circle p-2" aria-label="Next featured media">
-                <i class="bi bi-chevron-right"></i>
-              </button>
-            </div>
-          </div>
+        <!-- Video Category Filters -->
+        <div class="d-flex flex-wrap align-items-center justify-content-center gap-2 mb-4" id="videoCategoryFilterContainer">
+          <button type="button" class="btn btn-sm btn-spiritual-red rounded-pill px-3 py-2 fw-semibold video-filter-btn active" data-filter="all">
+            <i class="bi bi-collection-play me-1"></i> <span data-i18n="videos.filterAll">सभी वीडियो (18)</span>
+          </button>
+          <button type="button" class="btn btn-sm btn-outline-secondary rounded-pill px-3 py-2 fw-semibold video-filter-btn" data-filter="sa-true-story">
+            <i class="bi bi-film me-1"></i> <span data-i18n="videos.filterSATrueStory">SA True Story (9)</span>
+          </button>
+          <button type="button" class="btn btn-sm btn-outline-secondary rounded-pill px-3 py-2 fw-semibold video-filter-btn" data-filter="annapurna">
+            <i class="bi bi-heart-fill text-danger me-1"></i> <span data-i18n="videos.filterAnnapurna">अन्नपूर्णा मुहिम (8)</span>
+          </button>
+          <button type="button" class="btn btn-sm btn-outline-secondary rounded-pill px-3 py-2 fw-semibold video-filter-btn" data-filter="youtube-show">
+            <i class="bi bi-tv me-1"></i> <span data-i18n="videos.filterShow">यूट्यूब शो (1)</span>
+          </button>
+        </div>
 
-          <div id="featuredMediaSlider" class="d-flex gap-3 overflow-x-auto pb-3" style="scroll-behavior: smooth; -webkit-overflow-scrolling: touch; scrollbar-width: thin;">
-            <!-- Populated by main.js -->
+        <!-- Carousel Navigation & Indicators Bar -->
+        <div class="d-flex align-items-center justify-content-between mb-3 px-1">
+          <div class="d-flex align-items-center gap-2">
+            <span class="badge bg-danger-subtle text-danger fw-bold rounded-pill px-3 py-1 fs-7" id="videoSliderCounter">
+              01 / 18
+            </span>
+            <small class="text-muted d-none d-sm-inline" id="videoSliderHint">
+              <i class="bi bi-arrow-left-right me-1"></i> ड्रैग करें या एरो बटन दबाएं
+            </small>
+          </div>
+          <div class="d-flex align-items-center gap-2">
+            <button id="videoGalleryPrev" class="btn btn-outline-danger btn-sm rounded-circle p-0 d-flex align-items-center justify-content-center shadow-sm" style="width: 40px; height: 40px;" aria-label="Previous videos">
+              <i class="bi bi-chevron-left fs-5"></i>
+            </button>
+            <button id="videoGalleryNext" class="btn btn-outline-danger btn-sm rounded-circle p-0 d-flex align-items-center justify-content-center shadow-sm" style="width: 40px; height: 40px;" aria-label="Next videos">
+              <i class="bi bi-chevron-right fs-5"></i>
+            </button>
           </div>
         </div>
 
-        <!-- Grid of Videos -->
-        <div class="mb-5">
-          <h4 class="fw-bold text-dark mb-4 fs-4" data-i18n="videos.allVideos">सभी वीडियो</h4>
-          <div class="row g-4" id="videosCardsGrid">
-            <!-- Populated by main.js -->
+        <!-- Video Gallery Carousel Viewport & Track -->
+        <div class="video-carousel-viewport mb-5" id="videoGalleryViewport">
+          <div class="video-carousel-track" id="videoGalleryCarouselTrack">
+            <!-- Populated dynamically by main.js -->
           </div>
         </div>
 
