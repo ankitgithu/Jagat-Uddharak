@@ -28,7 +28,7 @@ import {
   ANNAPURNA_STORIES,
   ANNAPURNA_STATS,
   VIDEOS_DATA,
-  GALLERY_DATA,
+  ANNAPURNA_PHOTOS,
 } from '../data';
 import { useLanguage } from '../LanguageContext';
 import { PhotoItem } from '../types';
@@ -41,7 +41,7 @@ export const AnnapurnaMuhim: React.FC = () => {
   const [galleryTab, setGalleryTab] = useState<'videos' | 'photos'>('videos');
 
   // Annapurna-specific photos
-  const annapurnaPhotos = GALLERY_DATA.filter((p) => p.category === 'अन्नपूर्णा मुहिम');
+  const annapurnaPhotos = ANNAPURNA_PHOTOS;
 
   // Annapurna-specific videos (from Annapurna Muhim Official channel)
   const annapurnaVideos = VIDEOS_DATA.filter(

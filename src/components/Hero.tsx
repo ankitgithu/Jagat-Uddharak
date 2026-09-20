@@ -114,7 +114,7 @@ export const Hero: React.FC<HeroProps> = ({ onExploreClick, onVideoClick }) => {
     <section
       id="hero"
       aria-label="Hero Section"
-      className="relative min-h-screen pt-20 pb-12 flex flex-col justify-between overflow-hidden bg-stone-950 text-white select-none"
+      className="relative min-h-screen pt-24 sm:pt-28 pb-12 flex flex-col justify-between overflow-hidden bg-stone-950 text-white select-none"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => {
         setIsHovered(false);

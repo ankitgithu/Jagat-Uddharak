@@ -25,7 +25,7 @@ export const BookDetailModal: React.FC<BookDetailModalProps> = ({ book, onClose 
         <button
           onClick={onClose}
           className="absolute top-5 right-5 p-2 rounded-full text-stone-400 hover:text-stone-800 hover:bg-stone-100 transition-colors"
-          aria-label={t.gallery.close}
+          aria-label={language === 'hi' ? 'बंद करें' : 'Close'}
         >
           <X className="w-6 h-6" />
         </button>

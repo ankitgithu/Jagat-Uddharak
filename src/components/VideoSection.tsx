@@ -500,7 +500,7 @@ export const VideoSection: React.FC = () => {
               <button
                 onClick={() => setActiveVideo(null)}
                 className="p-1.5 rounded-lg text-stone-400 hover:text-white hover:bg-stone-800 transition-colors cursor-pointer"
-                aria-label={t.gallery.close}
+                aria-label={language === 'hi' ? 'बंद करें' : 'Close'}
               >
                 <X className="w-5 h-5" />
               </button>

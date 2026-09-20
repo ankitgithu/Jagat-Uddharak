@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Navbar } from './components/Navbar';
 import { Hero } from './components/Hero';
+import { SpecialMessageSection } from './components/SpecialMessageSection';
 import { Introduction } from './components/Introduction';
 import { DailyLive } from './components/DailyLive';
 import { SpiritualKnowledge } from './components/SpiritualKnowledge';
@@ -9,7 +10,6 @@ import { SocialReforms } from './components/SocialReforms';
 import { AnnapurnaMuhim } from './components/AnnapurnaMuhim';
 import { BooksSection } from './components/BooksSection';
 import { VideoSection } from './components/VideoSection';
-import { GallerySection } from './components/GallerySection';
 import { AboutSantRampalJi } from './components/AboutSantRampalJi';
 import { OfficialWebsiteSection } from './components/OfficialWebsiteSection';
 import { LatestUpdates } from './components/LatestUpdates';
@@ -26,7 +26,7 @@ export default function App() {
   const scrollToSection = (sectionId: string) => {
     const el = document.getElementById(sectionId);
     if (el) {
-      const navOffset = 70;
+      const navOffset = 90;
       const elementPosition = el.getBoundingClientRect().top;
       const offsetPosition = elementPosition + window.pageYOffset - navOffset;
 
@@ -41,6 +41,7 @@ export default function App() {
   useEffect(() => {
     const sections = [
       'hero',
+      'special-message',
       'introduction',
       'daily-live',
       'spiritual-knowledge',
@@ -50,7 +51,6 @@ export default function App() {
       'books',
       'featured-media',
       'videos',
-      'gallery',
       'about-guruji',
       'updates',
       'faq',
@@ -87,6 +87,9 @@ export default function App() {
           onExploreClick={() => scrollToSection('introduction')}
           onVideoClick={() => scrollToSection('videos')}
         />
+
+        {/* विशेष संदेश Section (Special Spiritual Audio Player) */}
+        <SpecialMessageSection />
 
         {/* 2. Introduction Section (ज्ञान से सेवा तक) */}
         <AnimatedSection>
@@ -128,12 +131,7 @@ export default function App() {
           <VideoSection />
         </AnimatedSection>
 
-        {/* 10. Photo Gallery Section (फोटो गैलरी / नवीनतम चित्र) */}
-        <AnimatedSection>
-          <GallerySection />
-        </AnimatedSection>
-
-        {/* 11. About Sant Rampal Ji Maharaj (संत रामपाल जी महाराज के बारे में) */}
+        {/* 10. About Sant Rampal Ji Maharaj (संत रामपाल जी महाराज के बारे में) */}
         <AnimatedSection>
           <AboutSantRampalJi />
         </AnimatedSection>

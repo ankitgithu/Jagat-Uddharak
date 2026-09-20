@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'motion/react';
 import { Menu, X, Youtube, Facebook, Globe } from 'lucide-react';
 import { OFFICIAL_CHANNELS } from '../data';
 import { useLanguage } from '../LanguageContext';
+import { IndianTimeClock } from './IndianTimeClock';
 
 interface NavbarProps {
   activeSection: string;
@@ -191,7 +192,6 @@ export const Navbar: React.FC<NavbarProps> = ({ activeSection, onNavigate }) => 
     { id: 'annapurna-muhim', label: t.nav.annapurna },
     { id: 'books', label: t.nav.books },
     { id: 'videos', label: t.nav.videos },
-    { id: 'gallery', label: t.nav.gallery },
     { id: 'contact', label: t.nav.contact },
   ];
 
@@ -205,17 +205,20 @@ export const Navbar: React.FC<NavbarProps> = ({ activeSection, onNavigate }) => 
       id="main-navbar"
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         isScrolled
-          ? 'bg-[#FAF8F5]/90 backdrop-blur-xl border-b border-amber-900/15 shadow-lg shadow-stone-900/5 py-2'
-          : 'bg-[#FAF8F5]/80 backdrop-blur-lg border-b border-amber-900/10 shadow-xs py-3'
+          ? 'bg-[#FAF8F5]/92 backdrop-blur-xl border-b border-amber-900/15 shadow-lg shadow-stone-900/5 pb-2'
+          : 'bg-[#FAF8F5]/85 backdrop-blur-lg border-b border-amber-900/10 shadow-xs pb-2.5 sm:pb-3'
       }`}
     >
+      {/* 1. Live Indian Standard Time (IST) Clock at the very top */}
+      <IndianTimeClock />
+
       {/* Top Glass Hairline Highlight */}
       <div className="absolute inset-x-0 top-0 h-[1px] bg-gradient-to-r from-transparent via-white/80 to-transparent pointer-events-none" />
 
       {/* Ambient Floating Glass Bubbles */}
       <NavbarBubbles />
 
-      <div className="max-w-7xl mx-auto px-3 sm:px-5 lg:px-7 relative z-10 flex items-center justify-between gap-2 lg:gap-3">
+      <div className={`max-w-7xl mx-auto px-3 sm:px-5 lg:px-7 relative z-10 flex items-center justify-between gap-2 lg:gap-3 ${isScrolled ? 'pt-1.5' : 'pt-2 sm:pt-2.5'}`}>
         {/* Left: Jagat Uddharak Official Logo (Guaranteed shrink-0 to prevent overlap) */}
         <a
           href="#hero"

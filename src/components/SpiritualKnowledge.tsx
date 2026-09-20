@@ -87,7 +87,7 @@ export const SpiritualKnowledge: React.FC = () => {
             <button
               onClick={() => setSelectedTopic(null)}
               className="absolute top-4 right-4 p-2 rounded-full text-stone-400 hover:text-stone-700 hover:bg-stone-100 transition-colors"
-              aria-label={t.gallery.close}
+              aria-label={language === 'hi' ? 'बंद करें' : 'Close'}
             >
               <X className="w-5 h-5" />
             </button>
